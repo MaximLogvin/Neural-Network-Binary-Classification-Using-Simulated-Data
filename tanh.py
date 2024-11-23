@@ -65,6 +65,7 @@ def write_file(num_layers,num_neurons,error):
     with open("tanh.txt","a") as f:
         f.write(f"Model with {num_layers} layers, {num_neurons} neurons:  {error}  \n")
         f.write("\n")
+        
 def write_csv(num_layers,num_neurons,error):
     with open("Tanh.csv","a") as res:
             res.write(f"({num_layers},{num_neurons}), {error[0]}")
@@ -78,7 +79,7 @@ def bootstrap(errors):
         means.append(np.mean(sample))
     return [np.mean(means),np.std(means)]
 
-def procedure():
+def procedure(num_layers,num_neurons):
     errors=[]
     for _ in range(1):
         print(f"Number of layers :{num_layers}, {num_neurons}")
@@ -124,7 +125,7 @@ num_neurons_list=[10]
 errors=[]
 for num_layers in num_layers_list:
     for num_neurons in num_neurons_list:
-        procedure()
+        procedure(num_layers,num_neurons)
 
 
                
