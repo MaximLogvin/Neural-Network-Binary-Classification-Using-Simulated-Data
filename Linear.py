@@ -153,8 +153,8 @@ def procedure(num_layer,num_neurons):
     errors=np.array(errors).flatten()
     err=bootstrap(errors)
     print(err)
-    write_file(num_layers,num_neurons,err)
-    write_csv(num_layers,num_neurons,err)
+    # write_file(num_layers,num_neurons,err)
+    # write_csv(num_layers,num_neurons,err)
 
 num_layers_list=[4]
 num_neurons_list=[10]
