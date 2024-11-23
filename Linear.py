@@ -5,18 +5,19 @@ import warnings
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'                           
 warnings.filterwarnings('ignore', message='Do not pass an `input_shape`/`input_dim` argument to a layer.')
 
-# actual code
 from tensorflow import keras
 from keras import layers
 from keras.utils import Sequence
 from keras.optimizers import Adam,SGD
 from keras.layers import Flatten
 from keras.callbacks import LearningRateScheduler,Callback
+
 from sklearn.metrics import roc_curve,auc,confusion_matrix,accuracy_score
 from sklearn.model_selection import GridSearchCV
 from scikeras.wrappers import KerasClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.datasets import load_digits
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -81,9 +82,10 @@ def bootstrap(errors):
 
 # write results to file
 def write_file(num_layers,num_neurons,error):
-    with open("linfunc.txt","a") as f:
+    with open("Linfunc.txt","a") as f:
         f.write(f"Model with {num_layers} layers, {num_neurons} neurons:  {error}  \n")
         f.write("\n")
+        
 def write_csv(num_layers,num_neurons,error):
     with open("Linear.csv","a") as res:
             res.write(f"({num_layers},{num_neurons}), {error[0]}")
@@ -156,8 +158,8 @@ def procedure(num_layer,num_neurons):
     write_file(num_layers,num_neurons,err)
     write_csv(num_layers,num_neurons,err)
 
-num_layers_list=[4]
-num_neurons_list=[10]
+num_layers_list=[4]           # 4 layers
+num_neurons_list=[10]         # 10 neurons per layer
 weights=[]
 errors=[]
 for num_layers in num_layers_list:
