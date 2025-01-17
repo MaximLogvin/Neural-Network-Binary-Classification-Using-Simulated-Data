@@ -22,6 +22,7 @@ import matplotlib.pyplot as plt
 import random
 import seaborn as sns
 import math
+import csv
 
 # piecewise constant function
 def p(x,points):
@@ -57,12 +58,12 @@ def create_model(num_layers,num_neurons,optimizer):
    model.compile(optimizer=optimizer,loss="sparse_categorical_crossentropy",metrics=["accuracy"])
    return model
 
-
 # data generator class
 class DataGenerator(Sequence):
     def __init__(self,batch_size,points):                                # output labels
         self.batch_size=batch_size 
         self.points=points
+        
     def __len__(self): 
         return 30000  # number of batches
     
@@ -70,8 +71,8 @@ class DataGenerator(Sequence):
         batch_data = np.random.uniform(0,1,self.batch_size)
         batch_labels = np.array([random.choices([0,1],weights=[1-p(x,self.points),p(x,self.points)],k=1)[0] for x in batch_data])
         return batch_data.reshape(-1,1), batch_labels                          # return one batch of data and its labels
-    
 
+# Monte Carlo method for error estimation
 def bootstrap(errors):
     means=[]
     for sim in range(10000):
@@ -84,9 +85,10 @@ def write_file(num_layers,num_neurons,error,accuracy,loss):
     with open("constant.txt","a") as f:
         f.write(f"Model with {num_layers} layers, {num_neurons} neurons:  {error},  {accuracy},  {loss}  \n")
         f.write("\n")
-        
+
+# writing results to csv
 def write_csv(num_layers,num_neurons,error):
-    with open("Constant.csv","a") as res:
+    with open("Constant.csv","a") as res:            
             res.write(f"({num_layers},{num_neurons}), {error[0]}")
             res.write(", ")
             res.write("\n")
@@ -101,6 +103,7 @@ points=[[0, 0],[0.1, 0.8], [0.2, 0.2],[0.3, 0.7],[0.4, 0.3],[0.5, 0.6],[0.6, 0.4
 #     plt.scatter(X[i+1],Y[i],color="white",edgecolor="black")
 # plt.show()
 
+# main code
 def procedure(num_layers,num_neurons):
     errors=[]
     for _ in range(1):
@@ -148,6 +151,7 @@ num_layers_list=[4]
 num_neurons_list=[10]
 weights=[]
 errors=[]
+
 for num_layers in num_layers_list:
     for num_neurons in num_neurons_list:
         procedure(num_layers,num_neurons)
