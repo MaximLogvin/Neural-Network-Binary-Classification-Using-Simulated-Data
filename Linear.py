@@ -113,7 +113,7 @@ points.append([1,1])
 #          plt.annotate(f"({points[i][0]},{points[i][1]})",(points[i][0],points[i][1]),textcoords="offset points",xytext=(0,25),ha="center")
 # plt.show()
 
-def procedure(num_layer,num_neurons):
+def procedure(num_layers,num_neurons):
     errors=[]
     for _ in range(1):
 
