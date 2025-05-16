@@ -22,9 +22,17 @@ import matplotlib.pyplot as plt
 import random
 import seaborn as sns
 import math
+<<<<<<< HEAD
 import csv
 
 # piecewise constant function
+=======
+import plotly.express as px
+from plotly.subplots import make_subplots
+
+
+
+>>>>>>> nn
 def p(x,points):
     for i in range(len(points)-1):
         if(points[i][0]<=x and x<points[i+1][0]):
@@ -58,12 +66,19 @@ def create_model(num_layers,num_neurons,optimizer):
    model.compile(optimizer=optimizer,loss="sparse_categorical_crossentropy",metrics=["accuracy"])
    return model
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> nn
 # data generator class
 class DataGenerator(Sequence):
     def __init__(self,batch_size,points):                                # output labels
         self.batch_size=batch_size 
         self.points=points
+<<<<<<< HEAD
         
+=======
+>>>>>>> nn
     def __len__(self): 
         return 30000  # number of batches
     
@@ -71,8 +86,24 @@ class DataGenerator(Sequence):
         batch_data = np.random.uniform(0,1,self.batch_size)
         batch_labels = np.array([random.choices([0,1],weights=[1-p(x,self.points),p(x,self.points)],k=1)[0] for x in batch_data])
         return batch_data.reshape(-1,1), batch_labels                          # return one batch of data and its labels
+<<<<<<< HEAD
 
 # Monte Carlo method for error estimation
+=======
+    
+
+# write results to file
+def write_file(num_layers,num_neurons,error):
+    with open("constant.txt","a") as f:
+        f.write(f"Model with {num_layers} layers, {num_neurons} neurons:  {error}  \n")
+        f.write("\n")
+def write_csv(num_layers,num_neurons,error):
+    with open("Constant.csv","a") as res:
+            res.write(f"({num_layers},{num_neurons}), {error[0]}")
+            res.write(", ")
+            res.write("\n")
+
+>>>>>>> nn
 def bootstrap(errors):
     means=[]
     for sim in range(10000):
@@ -80,6 +111,7 @@ def bootstrap(errors):
         means.append(np.mean(sample))
     return [np.mean(means),np.std(means)]
 
+<<<<<<< HEAD
 # write results to file
 def write_file(num_layers,num_neurons,error,accuracy,loss):
     with open("constant.txt","a") as f:
@@ -95,6 +127,12 @@ def write_csv(num_layers,num_neurons,error):
 
 points=[[0, 0],[0.1, 0.8], [0.2, 0.2],[0.3, 0.7],[0.4, 0.3],[0.5, 0.6],[0.6, 0.4],[0.7, 0.7],[0.8, 0.3],[0.9, 0.8],[1, 1]]
 
+=======
+
+
+#points=[[0, 0],[0.1, 0.8], [0.2, 0.2],[0.3, 0.8],[0.4, 0.2],[0.5, 0.8],[0.6, 0.2],[0.7, 0.8],[0.8, 0.3],[0.9, 1],[1, 1]]
+points = [[0, 0], [0.1, 0.8], [0.2, 0.2], [0.3, 0.7], [0.4, 0.3], [0.5, 0.6], [0.6, 0.4], [0.7, 0.7], [0.8, 0.3], [0.9, 0.8], [1, 1]]
+>>>>>>> nn
 # X = [p[0] for p in points]
 # Y = [p[1] for p in points]
 # for i in range(len(X)-1):
@@ -103,8 +141,12 @@ points=[[0, 0],[0.1, 0.8], [0.2, 0.2],[0.3, 0.7],[0.4, 0.3],[0.5, 0.6],[0.6, 0.4
 #     plt.scatter(X[i+1],Y[i],color="white",edgecolor="black")
 # plt.show()
 
+<<<<<<< HEAD
 # main code
 def procedure(num_layers,num_neurons):
+=======
+def procedure():
+>>>>>>> nn
     errors=[]
     for _ in range(1):
 
@@ -120,9 +162,15 @@ def procedure(num_layers,num_neurons):
         history=model.fit(data_gen,validation_data=data_valid)
 
         # test input
+<<<<<<< HEAD
         X_test=np.linspace(0,1,1000).reshape(-1,1)         
         X_shaped=X_test.reshape(-1,1)
 
+=======
+        X_test=np.linspace(0,1,1000).reshape(-1,1).flatten()       
+        X_shaped=X_test.reshape(-1,1).flatten()
+         
+>>>>>>> nn
         # predicting outputs 
         y_test_prob=model.predict(X_test)     
         y_test_prob=np.array([p[1] for p in y_test_prob]).flatten()          
@@ -144,6 +192,7 @@ def procedure(num_layers,num_neurons):
     errors=np.array(errors).flatten()
     err=bootstrap(errors)
     print(err)
+<<<<<<< HEAD
     # write_file(num_layers,num_neurons,err)
     # write_csv(num_layers,num_neurons,err)
     
@@ -155,3 +204,19 @@ errors=[]
 for num_layers in num_layers_list:
     for num_neurons in num_neurons_list:
         procedure(num_layers,num_neurons)
+=======
+    write_file(num_layers,num_neurons,err)
+    write_csv(num_layers,num_neurons,err)
+
+num_layers_list=[4]
+num_neurons_list=[10]
+
+for num_layers in num_layers_list:
+    for num_neurons in num_neurons_list:
+        procedure()
+
+
+
+
+    
+>>>>>>> nn
